@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f5f7fa;
+        }
+
+        .stat-card {
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+
+        .navbar-brand {
+            font-size: 1.4rem;
+        }
+
+        .table td,
+        .table th {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ⭐ Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 py-2 shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="bi bi-speedometer2"></i> Admin Panel
+            </a>
+
+            <div class="d-flex align-items-center">
+
+                <a href="{% url 'profile' %}" class="d-flex align-items-center text-decoration-none text-white me-3">
+                    {% if request.user.profile.image %}
+                    <img src="{{ request.user.profile.image.url }}" alt="Profile Image"
+                        class="rounded-circle border border-2 border-light" width="40" height="40"
+                        style="object-fit: cover;">
+                    {% else %}
+                    <img src="https://via.placeholder.com/40" alt="Default Profile"
+                        class="rounded-circle border border-2 border-light" width="40">
+                    {% endif %}
+                    <span class="ms-2 d-none d-sm-inline fw-semibold">{{ request.user.username }}</span>
+                </a>
+
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="container mt-4">
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show shadow"
+            role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- ⭐ Stats Section -->
+        <div class="row mb-4 text-center">
+
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'complaint-list' 'Total' %}" class="text-decoration-none">
+                    <div class="card bg-primary text-white p-3 shadow stat-card">
+                        <h3>{{ total }}</h3>
+                        <small>Total Complaints</small>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'complaint-list' 'Pending' %}" class="text-decoration-none">
+                    <div class="card bg-warning text-dark p-3 shadow stat-card">
+                        <h3>{{ pending }}</h3>
+                        <small>Pending</small>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'complaint-list' 'In Process' %}" class="text-decoration-none">
+                    <div class="card bg-info text-white p-3 shadow stat-card">
+                        <h3>{{ process }}</h3>
+                        <small>In Process</small>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <a href="{% url 'complaint-list' 'Resolved' %}" class="text-decoration-none">
+                    <div class="card bg-success text-white p-3 shadow stat-card">
+                        <h3>{{ resolved }}</h3>
+                        <small>Resolved</small>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+
+
+
+
+        <!-- ⭐ Complaints Table -->
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center bg-light">
+                <h5 class="mb-0 fw-bold">
+                    <i class="bi bi-list-ul"></i> All Complaints
+                </h5>
+
+                <form class="d-flex" method="GET">
+                    <select name="status" class="form-select form-select-sm me-2">
+                        <option value="">All Status</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Resolved">Resolved</option>
+                    </select>
+                    <button type="submit" class="btn btn-sm btn-dark">
+                        <i class="bi bi-filter"></i> Filter
+                    </button>
+                </form>
+            </div>
+
+            <div class="card-body p-0">
+                <table class="table table-striped table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Student</th>
+                            <th>Dept</th>
+                            <th>Subject</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for c in complaints %}
+                        <tr>
+                            <td>
+                                <strong>{{ c.name }}</strong><br>
+                                <small class="text-muted">{{ c.roll_number }}</small>
+                            </td>
+
+                            <td>{{ c.department }}</td>
+                            <td>{{ c.subject }}</td>
+                            <td>{{ c.created_at|date:"M d, Y" }}</td>
+
+                            <td>
+                                {% if c.status == 'Resolved' %}
+                                <span class="badge bg-success">Resolved</span>
+                                {% elif c.status == 'Pending' %}
+                                <span class="badge bg-warning text-dark">Pending</span>
+                                {% else %}
+                                <span class="badge bg-info">In Process</span>
+                                {% endif %}
+                            </td>
+
+                            <td class="text-center">
+                                <a href="{% url 'update-status' c.id %}" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
