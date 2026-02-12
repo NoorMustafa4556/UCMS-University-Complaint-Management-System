@@ -7,6 +7,7 @@ Built with **Django**, the system features a secure, role-based architecture wit
 
 ---
 
+
 ## 🚀 Key Features
 
 - **Role-Based Dashboards** – Dedicated panels for Students and Administrators.
