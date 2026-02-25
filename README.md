@@ -80,7 +80,9 @@ cd UCMS-University-Complaint-Management-System
 **2. Create and activate a virtual environment:**
 ```bash
 python -m venv env
-# Windows
+```
+## Windows
+```bash
 .\env\Scripts\activate
 # Mac/Linux
 source env/bin/activate
