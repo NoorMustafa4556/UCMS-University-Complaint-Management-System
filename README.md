@@ -72,6 +72,8 @@ Built with **Django**, the system features a secure, role-based architecture wit
 **1. Clone the repository:**
 ```bash
 git clone https://github.com/NoorMustafa4556/UCMS-University-Complaint-Management-System.git
+```
+```bash
 cd UCMS-University-Complaint-Management-System
 ```
 
