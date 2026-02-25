@@ -69,35 +69,35 @@ Built with **Django**, the system features a secure, role-based architecture wit
 - Python 3.8+
 - Git
 
-**1. Clone the repository:**
+### 1. Clone the repository:
 ```bash
 git clone https://github.com/NoorMustafa4556/UCMS-University-Complaint-Management-System.git
 ```
-### Navigate To Directory
+### 2. Navigate To Directory
 ```bash
 cd UCMS-University-Complaint-Management-System
 ```
 
-**2. Create and activate a virtual environment:**
+### 3. Create and activate a virtual environment:
 ```bash
 python -m venv env
 ```
-## Windows
+### Windows
 ```bash
 .\env\Scripts\activate
 ```
 
-## Mac/Linux
+### Mac/Linux
 ```bash
 source env/bin/activate
 ```
 
-**3. Install dependencies:**
+### 3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-**4. Apply migrations:**
+### 4. Apply migrations:
 ```bash
 python manage.py makemigrations
 ```
@@ -105,12 +105,12 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-**5. Create a Superuser:**
+### 5. Create a Superuser:
 ```bash
 python manage.py createsuperuser
 ```
 
-**6. Run the server:**
+### 6. Run the server:
 ```bash
 python manage.py runserver
 ```
