@@ -82,22 +82,22 @@ cd UCMS-University-Complaint-Management-System
 ```bash
 python -m venv env
 ```
-### Windows
+### (i) Windows
 ```bash
 .\env\Scripts\activate
 ```
 
-### Mac/Linux
+### (ii) Mac/Linux
 ```bash
 source env/bin/activate
 ```
 
-### 3. Install dependencies:
+### 4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Apply migrations:
+### 5. Apply migrations:
 ```bash
 python manage.py makemigrations
 ```
@@ -105,12 +105,12 @@ python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 5. Create a Superuser:
+### 6. Create a Superuser:
 ```bash
 python manage.py createsuperuser
 ```
 
-### 6. Run the server:
+### 7. Run the server:
 ```bash
 python manage.py runserver
 ```
