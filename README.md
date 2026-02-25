@@ -84,7 +84,10 @@ python -m venv env
 ## Windows
 ```bash
 .\env\Scripts\activate
-# Mac/Linux
+```
+
+## Mac/Linux
+```bash
 source env/bin/activate
 ```
 
